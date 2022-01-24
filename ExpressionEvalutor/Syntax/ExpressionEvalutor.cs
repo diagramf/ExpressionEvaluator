@@ -26,6 +26,24 @@ namespace ExpressionEvalutor
                 return Convert.ToSingle(n.NumberSyntax.Value);
             }
 
+            if (node is UnaryExpressionSyntax u)
+            {
+                var @operator = u.Operator;
+                var value = EvaluteExpression(u.Value);
+                if (@operator.Kind == SyntaxKind.SubtractToken)
+                {
+                    return -value;
+                }
+                else if (@operator.Kind == SyntaxKind.AdditionToken)
+                {
+                    return value;
+                }
+                else
+                {
+                    throw new Exception($"想定しない単項演算子 {@operator.Kind} が渡されました");
+                }
+            }
+
             if (node is BinaryExpressionSyntax b)
             {
                 var left = EvaluteExpression(b.Left);
@@ -50,7 +68,7 @@ namespace ExpressionEvalutor
                 }
                 else
                 {
-                    throw new Exception($"想定しないオペレータ {@operator.Kind} が渡されました。");
+                    throw new Exception($"想定しない二項演算子 {@operator.Kind} が渡されました。");
                 }
             }
 

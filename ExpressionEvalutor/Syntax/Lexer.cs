@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace ExpressionEvalutor
 {
+    /// <summary>
+    /// テキストから構文を解析するクラス
+    /// </summary>
     public sealed class Lexer
     {
         private readonly string text;

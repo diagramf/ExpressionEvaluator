@@ -39,17 +39,18 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BinaryExpressionSyntax.cs" />
-    <Compile Include="ExpressionEvalutor.cs" />
-    <Compile Include="Lexer.cs" />
-    <Compile Include="NumberExpressionSyntax.cs" />
-    <Compile Include="ParenthesesExpressionSyntax.cs" />
+    <Compile Include="Syntax\UnaryExpressionSyntax.cs" />
+    <Compile Include="Syntax\BinaryExpressionSyntax.cs" />
+    <Compile Include="Syntax\ExpressionEvalutor.cs" />
+    <Compile Include="Syntax\Lexer.cs" />
+    <Compile Include="Syntax\NumberExpressionSyntax.cs" />
+    <Compile Include="Syntax\ParenthesesExpressionSyntax.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="SyntaxKind.cs" />
-    <Compile Include="SyntaxNode.cs" />
-    <Compile Include="SyntaxParser.cs" />
-    <Compile Include="SyntaxToken.cs" />
-    <Compile Include="SyntaxTree.cs" />
+    <Compile Include="Syntax\SyntaxKind.cs" />
+    <Compile Include="Syntax\SyntaxNode.cs" />
+    <Compile Include="Syntax\SyntaxParser.cs" />
+    <Compile Include="Syntax\SyntaxToken.cs" />
+    <Compile Include="Syntax\SyntaxTree.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace ExpressionEvalutor
 {
+    /// <summary>
+    /// 構文の種類
+    /// </summary>
     public enum SyntaxKind
     {
         BadToken,
@@ -25,5 +28,6 @@ namespace ExpressionEvalutor
         NumberExpression,
         BinaryExpression,
         ParenthesesExpression,
+        UnaryExpression,
     }
 }

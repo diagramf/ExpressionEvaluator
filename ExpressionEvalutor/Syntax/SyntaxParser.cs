@@ -30,6 +30,14 @@ namespace ExpressionEvalutor
             } while (syntaxToken.Kind != SyntaxKind.EndOfFileToken);
         }
 
+        /// <summary>
+        /// 現在の位置からオフセットだけ進んだ位置のトークンを取得します。
+        /// </summary>
+        /// <remarks>
+        /// 取得する位置がトークンリストの長さを超える場合は、最後の要素を取得します。
+        /// </remarks>
+        /// <param name="offset"></param>
+        /// <returns></returns>
         private SyntaxToken Peek(int offset)
         {
             int index = position + offset;
@@ -42,15 +50,26 @@ namespace ExpressionEvalutor
             return tokens[index];
         }
 
+        /// <summary>
+        /// 現在の位置のトークン
+        /// </summary>
         private SyntaxToken Current => Peek(0);
+        /// <summary>
+        /// 一つ先の位置のトークン
+        /// </summary>
         private SyntaxToken Lookahead => Peek(1);
 
+        /// <summary>
+        /// トークンを取得して、位置を進めます。
+        /// </summary>
+        /// <returns></returns>
         private SyntaxToken NextToken()
         {
             SyntaxToken nextToken = Current;
             position++;
             return nextToken;
         }
+
         private SyntaxToken MatchToken(SyntaxKind kind)
         {
             if (Current.Kind == kind)
@@ -112,9 +131,21 @@ namespace ExpressionEvalutor
 
                 case SyntaxKind.NumberToken:
                     return ParseNumberExpression();
+
+                case SyntaxKind.AdditionToken:
+                case SyntaxKind.SubtractToken:
+                    return ParseUnaryExpression();
             }
 
             return null;
+        }
+
+        private SyntaxNode ParseUnaryExpression()
+        {
+            SyntaxToken @operator = NextToken();
+            SyntaxNode value = ParsePrimaryExpression();
+
+            return new UnaryExpressionSyntax(@operator, value);
         }
 
         private SyntaxNode ParseParenthesesExpression()
