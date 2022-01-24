@@ -119,14 +119,14 @@ namespace ExpressionEvalutor
         private SyntaxToken ReadNumber()
         {
             int start = position;
-            while (char.IsDigit(Current))
+            while (char.IsDigit(Current) || Current == '.')
             {
                 Next();
             }
 
             int tokenLength = position - start;
             string tokenText = text.Substring(start, tokenLength);
-            int.TryParse(tokenText, out int value);
+            float.TryParse(tokenText, out float value);
 
             return new SyntaxToken(SyntaxKind.NumberToken, start, tokenText, value);
         }
