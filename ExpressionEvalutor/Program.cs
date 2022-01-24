@@ -17,7 +17,7 @@ namespace ExpressionEvalutor
                 string read = Console.ReadLine();
                 SyntaxTree syntaxTree = SyntaxTree.Parse(read);
 
-                ExpressionEvalutor evalutor = new ExpressionEvalutor(syntaxTree.Root);
+                Evalutor evalutor = new Evalutor(syntaxTree.Root);
                 PrettyPrint(syntaxTree.Root);
                 Console.WriteLine($"{evalutor.Evalute()}");
             }

@@ -41,7 +41,7 @@
   <ItemGroup>
     <Compile Include="Syntax\UnaryExpressionSyntax.cs" />
     <Compile Include="Syntax\BinaryExpressionSyntax.cs" />
-    <Compile Include="Syntax\ExpressionEvalutor.cs" />
+    <Compile Include="Syntax\Evalutor.cs" />
     <Compile Include="Syntax\Lexer.cs" />
     <Compile Include="Syntax\NumberExpressionSyntax.cs" />
     <Compile Include="Syntax\ParenthesesExpressionSyntax.cs" />

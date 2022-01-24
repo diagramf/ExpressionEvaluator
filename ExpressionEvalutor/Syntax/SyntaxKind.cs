@@ -19,6 +19,7 @@ namespace ExpressionEvalutor
         SubtractToken,
         MultiplyToken,
         DivideToken,
+        ModuloToken,
 
         EndOfFileToken,
         WhiteSpaceToken,

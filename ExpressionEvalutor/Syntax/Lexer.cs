@@ -71,6 +71,9 @@ namespace ExpressionEvalutor
                 case '/':
                     syntaxToken = new SyntaxToken(SyntaxKind.DivideToken, position++, "/", null);
                     break;
+                case '%':
+                    syntaxToken = new SyntaxToken(SyntaxKind.ModuloToken, position++, "%", null);
+                    break;
                 case '(':
                     syntaxToken = new SyntaxToken(SyntaxKind.OpenParenthesesToken, position++, "(", null);
                     break;

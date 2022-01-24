@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace ExpressionEvalutor
 {
-    public sealed class ExpressionEvalutor
+    public sealed class Evalutor
     {
         private readonly SyntaxNode root;
-        public ExpressionEvalutor(SyntaxNode root)
+        public Evalutor(SyntaxNode root)
         {
             this.root = root;
         }
@@ -65,6 +65,10 @@ namespace ExpressionEvalutor
                 else if (@operator.Kind == SyntaxKind.DivideToken)
                 {
                     return left / right;
+                }
+                else if (@operator.Kind == SyntaxKind.ModuloToken)
+                {
+                    return left % right;
                 }
                 else
                 {

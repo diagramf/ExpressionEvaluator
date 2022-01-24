@@ -112,7 +112,8 @@ namespace ExpressionEvalutor
             var left = ParsePrimaryExpression();
 
             while (Current.Kind == SyntaxKind.MultiplyToken ||
-                  Current.Kind == SyntaxKind.DivideToken)
+                  Current.Kind == SyntaxKind.DivideToken ||
+                  Current.Kind == SyntaxKind.ModuloToken)
             {
                 var @operator = NextToken();
                 var right = ParsePrimaryExpression();
