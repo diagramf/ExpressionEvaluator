@@ -1,10 +1,11 @@
-﻿using System;
+﻿using ExpressionEvalutor.Syntax;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ExpressionEvalutor
+namespace ExpressionEvalutor.Evaluation
 {
     public sealed class Evalutor
     {

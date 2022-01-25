@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ExpressionEvalutor
+namespace ExpressionEvalutor.Syntax
 {
     public sealed class SyntaxParser
     {
@@ -138,7 +135,7 @@ namespace ExpressionEvalutor
                     return ParseUnaryExpression();
             }
 
-            return null;
+            return new BadExpressionSyntax(Current);
         }
 
         private SyntaxNode ParseUnaryExpression()

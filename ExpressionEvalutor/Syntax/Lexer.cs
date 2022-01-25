@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ExpressionEvalutor
+﻿
+namespace ExpressionEvalutor.Syntax
 {
     /// <summary>
     /// テキストから構文を解析するクラス
