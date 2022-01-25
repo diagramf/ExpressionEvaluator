@@ -15,16 +15,17 @@ namespace ExpressionEvalutor.Syntax
         MultiplyToken,
         DivideToken,
         ModuloToken,
+        ExponentiationToken,
 
         EndOfFileToken,
         WhiteSpaceToken,
         OpenParenthesesToken,
         CloseParenthesesToken,
 
-        NumberExpression,
+        UnaryExpression,
         BinaryExpression,
         ParenthesesExpression,
-        UnaryExpression,
+        NumberExpression,
         BadExpression,
     }
 }

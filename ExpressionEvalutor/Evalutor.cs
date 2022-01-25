@@ -1,9 +1,5 @@
 ﻿using ExpressionEvalutor.Syntax;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ExpressionEvalutor.Evaluation
 {
@@ -76,6 +72,10 @@ namespace ExpressionEvalutor.Evaluation
                 {
                     return left % right;
                 }
+                else if (@operator.Kind == SyntaxKind.ExponentiationToken)
+                {
+                    return (float)Math.Pow(left, right);
+                }
                 else
                 {
                     throw new Exception($"想定しない二項演算子 {@operator.Kind} が渡されました。");
@@ -140,6 +140,10 @@ namespace ExpressionEvalutor.Evaluation
                 else if (@operator.Kind == SyntaxKind.ModuloToken)
                 {
                     return left + " % " + right;
+                }
+                else if (@operator.Kind == SyntaxKind.ExponentiationToken)
+                {
+                    return left + " ^ " + right;
                 }
                 else
                 {

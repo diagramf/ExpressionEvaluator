@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace ExpressionEvalutor.Syntax
@@ -11,20 +12,41 @@ namespace ExpressionEvalutor.Syntax
         public SyntaxParser(string text)
         {
             tokens = new List<SyntaxToken>();
+            int correctOffset = 0;
 
             Lexer lexer = new Lexer(text);
             SyntaxToken syntaxToken;
+            SyntaxToken beforeToken = null;
             do
             {
                 syntaxToken = lexer.NextToken();
-
-                if (syntaxToken.Kind != SyntaxKind.WhiteSpaceToken &&
-                    syntaxToken.Kind != SyntaxKind.BadToken)
+                if (syntaxToken.Kind == SyntaxKind.WhiteSpaceToken ||
+                    syntaxToken.Kind == SyntaxKind.BadToken)
                 {
-                    tokens.Add(syntaxToken);
+                    continue;
                 }
 
+                // 省略されている乗算を追加します。
+                if (beforeToken != null)
+                {
+                    if (beforeToken.Kind == SyntaxKind.NumberToken &&
+                        syntaxToken.Kind == SyntaxKind.OpenParenthesesToken)
+                    {
+                        tokens.Add(new SyntaxToken(SyntaxKind.MultiplyToken, syntaxToken.Position + correctOffset, "*", null));
+                        correctOffset++;
+                    }
+                }
+
+                tokens.Add(
+                    new SyntaxToken(
+                        syntaxToken.Kind,
+                        syntaxToken.Position + correctOffset,
+                        syntaxToken.Text,
+                        syntaxToken.Value));
+
+                beforeToken = syntaxToken;
             } while (syntaxToken.Kind != SyntaxKind.EndOfFileToken);
+
         }
 
         /// <summary>
@@ -84,36 +106,21 @@ namespace ExpressionEvalutor.Syntax
             return new SyntaxTree(root, endOfFile);
         }
 
-        private SyntaxNode ParseExpression()
+        private SyntaxNode ParseExpression(int parentPrecedence = 0)
         {
-            return ParseTerm();
-        }
+            SyntaxNode left = ParsePrimaryExpression();
 
-        private SyntaxNode ParseTerm()
-        {
-            var left = ParseFactor();
-
-            while(Current.Kind == SyntaxKind.AdditionToken ||
-                  Current.Kind == SyntaxKind.SubtractToken)
+            while(true)
             {
+                int precedence = Current.Kind.GetBinaryOperatorPrecedence();
+
+                if (precedence == 0 || precedence <= parentPrecedence)
+                {
+                    break;
+                }
+
                 var @operator = NextToken();
-                var right = ParseFactor();
-                left = new BinaryExpressionSyntax(left, @operator, right);
-            }
-
-            return left;
-        }
-
-        private SyntaxNode ParseFactor()
-        {
-            var left = ParsePrimaryExpression();
-
-            while (Current.Kind == SyntaxKind.MultiplyToken ||
-                  Current.Kind == SyntaxKind.DivideToken ||
-                  Current.Kind == SyntaxKind.ModuloToken)
-            {
-                var @operator = NextToken();
-                var right = ParsePrimaryExpression();
+                var right = ParseExpression(precedence);
                 left = new BinaryExpressionSyntax(left, @operator, right);
             }
 
@@ -133,6 +140,7 @@ namespace ExpressionEvalutor.Syntax
                 case SyntaxKind.AdditionToken:
                 case SyntaxKind.SubtractToken:
                     return ParseUnaryExpression();
+
             }
 
             return new BadExpressionSyntax(Current);

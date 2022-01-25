@@ -15,9 +15,10 @@ namespace ExpressionEvalutor.Syntax
         }
 
         private char Current => Peek(0);
-        private void Next()
+
+        private int Next()
         {
-            position++;
+            return position++;
         }
 
         /// <summary>
@@ -46,38 +47,28 @@ namespace ExpressionEvalutor.Syntax
         /// <returns></returns>
         public SyntaxToken NextToken()
         {
-            SyntaxToken syntaxToken = null;
-
-
             switch (Current)
             {
                 case '\0':
-                    syntaxToken = new SyntaxToken(SyntaxKind.EndOfFileToken, position++, "\0", null);
-                    break;
+                    return new SyntaxToken(SyntaxKind.EndOfFileToken, position++, "\0", null);
                 case '+':
-                    syntaxToken = new SyntaxToken(SyntaxKind.AdditionToken, position++, "+", null);
-                    break;
+                    return new SyntaxToken(SyntaxKind.AdditionToken, position++, "+", null);
                 case '-':
-                    syntaxToken = new SyntaxToken(SyntaxKind.SubtractToken, position++, "-", null);
-                    break;
+                    return new SyntaxToken(SyntaxKind.SubtractToken, position++, "-", null);
                 case '*':
-                    syntaxToken = new SyntaxToken(SyntaxKind.MultiplyToken, position++, "*", null);
-                    break;
+                    return new SyntaxToken(SyntaxKind.MultiplyToken, position++, "*", null);
                 case '/':
-                    syntaxToken = new SyntaxToken(SyntaxKind.DivideToken, position++, "/", null);
-                    break;
+                    return new SyntaxToken(SyntaxKind.DivideToken, position++, "/", null);
                 case '%':
-                    syntaxToken = new SyntaxToken(SyntaxKind.ModuloToken, position++, "%", null);
-                    break;
+                    return new SyntaxToken(SyntaxKind.ModuloToken, position++, "%", null);
+                case '^':
+                    return new SyntaxToken(SyntaxKind.ExponentiationToken, position++, "^", null);
                 case '(':
-                    syntaxToken = new SyntaxToken(SyntaxKind.OpenParenthesesToken, position++, "(", null);
-                    break;
+                    return new SyntaxToken(SyntaxKind.OpenParenthesesToken, position++, "(", null);
                 case ')':
-                    syntaxToken = new SyntaxToken(SyntaxKind.CloseParenthesesToken, position++, ")", null);
-                    break;
+                    return new SyntaxToken(SyntaxKind.CloseParenthesesToken, position++, ")", null);
                 case ' ':
-                    syntaxToken = ReadWhiteSpace();
-                    break;
+                    return ReadWhiteSpace();
 
                 case '0':
                 case '1':
@@ -89,16 +80,10 @@ namespace ExpressionEvalutor.Syntax
                 case '7':
                 case '8':
                 case '9':
-                    syntaxToken = ReadNumber();
-                    break;
+                    return ReadNumber();
             }
 
-            if (syntaxToken == null)
-            {
-                return new SyntaxToken(SyntaxKind.BadToken, position++, text.Substring(position - 1, 1), null);
-            }
-
-            return syntaxToken;
+            return new SyntaxToken(SyntaxKind.BadToken, position++, Peek(-1).ToString(), null);
         }
 
         private SyntaxToken ReadWhiteSpace()
